@@ -1,0 +1,46 @@
+﻿@using MvcHtmlHelpers;
+
+    @{
+        ViewBag.Title = "Contact";
+    }
+
+
+    @using (Html.BeginForm("SendMail", "Contact", FormMethod.Post, new { id = "contact-form", enctype = "multipart/form-data", runat = "server" }))
+    {
+        <p>
+            <label for=" nom">Votre nom</label>
+            @if(!String.IsNullOrEmpty(ViewBag.nom)){
+                <input type="text" name="nom" value="@ViewBag.nom" required />
+            }else{
+            <input type="text" name="nom" placeholder="Prénom Nom" required />
+            }
+         </p>
+        
+        <p>
+            <label for="email">Votre e-mail</label>
+            @if (!String.IsNullOrEmpty(ViewBag.email))
+            {
+                <input type="email" name="email" value="@ViewBag.email" required />
+            }else{
+                <input type="email" name="email" placeholder="adresse@email" required />
+            }
+        </p>
+        <p>
+            <label for="message">Votre message</label>
+            @if (String.IsNullOrEmpty(ViewBag.message))
+            {
+                <textarea name="message" required></textarea>
+            }
+            else
+            {
+                <textarea name="message" required>@ViewBag.message</textarea>
+            }
+        </p>
+        <p>@Html.GenerateCaptcha()</p>
+        
+        if (String.IsNullOrEmpty(ViewBag.message_erreur) == false){
+            <p class="red">@ViewBag.message_erreur</p>
+        }
+        <p><input type="submit" value="ENVOYER" /></p>
+    }
+
